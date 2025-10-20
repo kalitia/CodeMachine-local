@@ -214,6 +214,7 @@ export async function runLocal(options: RunLocalOptions): Promise<RunLocalResult
   }
 
   logger.debug("Local runner - CLI Response:", result);
+
   if (result.exitCode !== 0) {
     const errorOutput = result.stderr.trim() || result.stdout.trim() || 'no error output';
     const lines = errorOutput.split('\n').slice(0, 10);
