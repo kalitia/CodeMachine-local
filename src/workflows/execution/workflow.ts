@@ -126,7 +126,7 @@ export async function runWorkflow(options: RunWorkflowOptions = {}): Promise<voi
         console.error(
           formatAgentLog(
             step.agentId,
-            `${pretty} override is not authenticated; falling back to first authenticated engine by order. Run 'codemachine auth login' to use ${pretty}.`,
+            `${pretty} override is not authenticated; falling back to first authenticated engine by order. Run 'codemachine-local auth login' to use ${pretty}.`,
           ),
         );
 

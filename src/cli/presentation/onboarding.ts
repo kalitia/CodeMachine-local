@@ -13,7 +13,7 @@ export function renderLoginScreen(): string {
   lines.push(banner('Authentication Required'));
   lines.push('');
   lines.push(section('Need a Manual Command?'));
-  lines.push(formatKeyValue('Fallback', palette.primary('codemachine auth login')));
+  lines.push(formatKeyValue('Fallback', palette.primary('codemachine-local auth login')));
   lines.push('Run the fallback command in a separate terminal if the automatic login fails.');
   return lines.join('\n');
 }

@@ -68,7 +68,7 @@ export async function runStartupFlow(specDisplayPath?: string): Promise<StartupF
         });
       } catch (_error) {
         console.error('\n⚠️  Authentication selection failed.');
-        console.error('You can authenticate manually by running: codemachine auth login\n');
+        console.error('You can authenticate manually by running: codemachine-local auth login\n');
         console.error('Continuing without authentication...\n');
         // Continue without auth - some commands may still work
         providerId = undefined;
@@ -78,7 +78,7 @@ export async function runStartupFlow(specDisplayPath?: string): Promise<StartupF
         const engine = registry.get(providerId);
         if (!engine) {
           console.error(`\n⚠️  Unknown provider: ${providerId}`);
-          console.error('You can authenticate manually by running: codemachine auth login\n');
+          console.error('You can authenticate manually by running: codemachine-local auth login\n');
         } else {
           try {
             await engine.auth.ensureAuth();
@@ -86,7 +86,7 @@ export async function runStartupFlow(specDisplayPath?: string): Promise<StartupF
           } catch (error) {
             console.error('\n⚠️  Authentication failed:', error instanceof Error ? error.message : String(error));
             console.error('\nPlease try again or authenticate manually by running:');
-            console.error(`  codemachine auth login\n`);
+            console.error(`  codemachine-local auth login\n`);
             console.error('Exiting...\n');
             process.exit(1);
           }
@@ -94,7 +94,7 @@ export async function runStartupFlow(specDisplayPath?: string): Promise<StartupF
       } else if (shouldLogin) {
         // User canceled or selector failed
         console.log('\n⚠️  No authentication provider selected.');
-        console.log('You can authenticate later by running: codemachine auth login\n');
+        console.log('You can authenticate later by running: codemachine-local auth login\n');
         console.log('Note: Some commands require authentication to work.\n');
       }
     }

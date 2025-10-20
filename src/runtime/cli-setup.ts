@@ -26,7 +26,7 @@ const templatesDir = path.resolve(packageRoot, 'templates', 'workflows');
 
 export async function runCodemachineCli(argv: string[] = process.argv): Promise<void> {
   const program = new Command()
-    .name('codemachine')
+    .name('codemachine-local')
     .description('Codemachine multi-agent CLI orchestrator')
     .option('-d, --dir <path>', 'Target workspace directory', process.cwd())
     .option('--spec <path>', 'Path to the planning specification file', DEFAULT_SPEC_PATH)

@@ -87,7 +87,7 @@ export async function runSessionShell(options: SessionShellOptions): Promise<voi
     }
 
     if (raw === '/version') {
-      console.log(`CodeMachine v${pkg.version}`);
+      console.log(`CodeMachine-local v${pkg.version}`);
       prompt();
       rl.prompt();
       continue;

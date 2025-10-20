@@ -20,7 +20,7 @@ export function findPackageRoot(): string | null {
     if (existsSync(packageJson)) {
       try {
         const pkg = require(packageJson);
-        if (pkg?.name === 'codemachine') {
+        if (pkg?.name === 'codemachine-local') {
           return current;
         }
       } catch {
@@ -43,7 +43,7 @@ export function loadPlaceholdersConfig(): PlaceholdersConfig {
   try {
     const packageRoot = findPackageRoot();
     if (!packageRoot) {
-      console.warn('Warning: Could not find codemachine package root');
+      console.warn('Warning: Could not find codemachine-local package root');
       return {};
     }
 

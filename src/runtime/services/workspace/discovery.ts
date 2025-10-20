@@ -19,7 +19,7 @@ export const CLI_PACKAGE_ROOT = (() => {
     if (existsSync(packageJson)) {
       try {
         const pkg = require(packageJson);
-        if (pkg?.name === 'codemachine') {
+        if (pkg?.name === 'codemachine-local') {
           return current;
         }
       } catch {

@@ -1,6 +1,6 @@
 import { logTelemetry } from './logger.js';
 
-type EngineType = 'codex' | 'cursor' | 'claude';
+type EngineType = 'codex' | 'cursor' | 'claude' | 'local';
 
 interface CapturedTelemetry {
   duration?: number;
@@ -70,6 +70,23 @@ export function createTelemetryCapture(
               },
             };
           }
+        } else if (engine === 'local') {
+          if (json.status === 'completed' && json.usage) {
+            console.debug('[TELEMETRY DEBUG] Captured telemetry:', {
+              //duration: json.duration_ms,
+              //cost: json.total_cost_usd,
+              input: json.usage.input_tokens,
+              output: json.usage.output_tokens,
+            });
+            captured = {
+              //duration: json.duration_ms,
+              //cost: json.total_cost_usd,
+              tokens: {
+                input: json.usage.input_tokens,
+                output: json.usage.output_tokens,
+              },
+            };
+          }
         }
       } catch {
         // Ignore JSON parse errors - not all lines will be valid JSON
@@ -77,7 +94,7 @@ export function createTelemetryCapture(
     },
 
     logCapturedTelemetry(exitCode: number): void {
-      console.error('[TELEMETRY DEBUG] logCapturedTelemetry called', {
+      console.debug('[TELEMETRY DEBUG] logCapturedTelemetry called', {
         hasCaptured: !!captured,
         hasTokens: !!captured?.tokens,
         exitCode,
@@ -85,17 +102,17 @@ export function createTelemetryCapture(
       });
 
       if (!captured || !captured.tokens) {
-        console.error('[TELEMETRY DEBUG] No telemetry captured, skipping log');
+        console.debug('[TELEMETRY DEBUG] No telemetry captured, skipping log');
         return;
       }
 
       // Validate that token values are actual numbers
       if (typeof captured.tokens.input !== 'number' || typeof captured.tokens.output !== 'number') {
-        console.error('[TELEMETRY DEBUG] Invalid token values:', captured.tokens);
+        console.debug('[TELEMETRY DEBUG] Invalid token values:', captured.tokens);
         return;
       }
 
-      console.error('[TELEMETRY DEBUG] Writing telemetry to file...');
+      console.debug('[TELEMETRY DEBUG] Writing telemetry to file...');
       logTelemetry({
         engine,
         model: model || (engine === 'cursor' ? 'auto' : 'default'),
