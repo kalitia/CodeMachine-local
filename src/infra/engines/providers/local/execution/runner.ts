@@ -40,12 +40,10 @@ function formatLocalStreamJsonLine(line: string): string | null {
     }
 
     // Handle command execution
-    if ((json.type === 'in_progress' || json.type === 'incomplete' || json.type === 'calling') &&
+    if ((json.status === 'in_progress' || json.status === 'incomplete' || json.status === 'calling') &&
         (json.output[0]?.type === 'mcp_call' || json.output[0]?.type === 'mcp_approval_request' || json.output[0]?.type === 'custom_tool_call')) {
       return `🔧 COMMAND: ${json.output[0]?.name}`;
-    }
-
-    if (json.status === 'completed' && (json.output[0]?.type === 'mcp_call' || json.output[0]?.type === 'mcp_approval_request' || json.output[0]?.type === 'custom_tool_call')) {
+    } else if (json.status === 'completed' && (json.output[0]?.type === 'mcp_call' || json.output[0]?.type === 'mcp_approval_request' || json.output[0]?.type === 'custom_tool_call')) {
       const exitCode = json.error.code ?? 0;
       if (exitCode === 0) {
         const preview = json.output[0]?.name
@@ -55,11 +53,12 @@ function formatLocalStreamJsonLine(line: string): string | null {
       } else {
         return `❌ COMMAND FAILED: Exit code ${exitCode}`;
       }
-    }
-
+    } else
     // Handle agent messages
     if (json.status === 'completed' && json.output[0]?.type === 'message') {
       return `💬 MESSAGE: ${json.output[0]?.content[0]?.text}`;
+    } else {
+      logger.info(`💬 OTHER TEXT: ${json}`);
     }
 
     // Handle turn/thread lifecycle events (skip these)

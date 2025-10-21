@@ -20,6 +20,7 @@ export function buildLocalExecCommand(options: LocalCommandOptions): LocalComman
   const { localApiUri, localApiPath, localApiKey, /*stream, prompt, model, modelReasoningEffort*/ } = options;
 
   const args = [
+    "-ss",
     "-X", "POST",
     "-L", `${localApiUri}${localApiPath}`,
     "-H", "Content-Type: application/json",

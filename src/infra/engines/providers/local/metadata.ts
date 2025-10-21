@@ -18,6 +18,7 @@ export const metadata: LocalEngineMetadata = {
   localApiPath: '/v1/responses',
   localApiKey: 'lm-studio',
   stream: false,
+  //defaultModel: 'unsloth/glm-4.5-air',
   defaultModel: 'qwen3-coder-30b-a3b-instruct',
   defaultModelReasoningEffort: undefined,
   order: 100,
